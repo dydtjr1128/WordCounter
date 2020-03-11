@@ -9,14 +9,7 @@
 
 #include "ThreadPool.h"
 #include "FileReader.h"
-// 네임스페이스 사용
-using namespace std;
 
-void work(int t, int id) {
-	printf("%d start \n", id);
-	std::this_thread::sleep_for(std::chrono::seconds(t));
-	printf("%d end after %ds\n", id, t);
-}
 // 메인 함수
 int main(void) {
 	std::string filePath, findWord;
@@ -45,7 +38,4 @@ int main(void) {
 			});
 	}
 	std::cin >> filePath;
-	//for (int i = 0; i < 100; i++) {
-	//	pool.EnqueueJob([i]() { filePaths });
-	//}
 }
