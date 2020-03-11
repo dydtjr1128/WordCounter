@@ -3,24 +3,49 @@
 #include <string>
 #include <iterator>
 #include <thread>
+#include <vector>
+#include <sstream>
 #include <filesystem>
 
 #include "ThreadPool.h"
+#include "FileReader.h"
 // 네임스페이스 사용
 using namespace std;
 
 void work(int t, int id) {
-    printf("%d start \n", id);
-    std::this_thread::sleep_for(std::chrono::seconds(t));
-    printf("%d end after %ds\n", id, t);
+	printf("%d start \n", id);
+	std::this_thread::sleep_for(std::chrono::seconds(t));
+	printf("%d end after %ds\n", id, t);
 }
 // 메인 함수
 int main(void) {
-    ThreadPool::ThreadPool pool(3);
+	std::string filePath, findWord;
+	std::cout << "Input findWord>>";
+	std::cin >> findWord;
+	std::cout << "Input filePath>>";
+	std::cin >> filePath;
 
-    for (int i = 0; i < 100; i++) {
-        pool.EnqueueJob([i]() { work(i % 3 + 1, i); });
-        printf("@@%d@@", i);
-    }
-    printf("fgfff");
+	auto filePaths = File::FileReader::ReadSubFiles(std::filesystem::path(filePath));
+
+	std::cout << "========== Start read file ==========" << std::endl;
+
+	size_t coreSupportNumber = std::thread::hardware_concurrency();
+	ThreadPool::ThreadPool pool(coreSupportNumber);
+	std::vector<std::string> resultVector;
+	for (auto& path : filePaths) {
+		pool.EnqueueJob([path, findWord, resultVector]() {
+			int count = File::FileReader::CountWordsInFile(path, findWord);
+			std::stringstream ss;
+			ss.width(40);
+			ss << path.filename().string() << " : ";
+			ss.fill('*');
+			ss.width(10);
+			ss << count << std::endl;
+			std::cout << ss.str();
+			});
+	}
+	std::cin >> filePath;
+	//for (int i = 0; i < 100; i++) {
+	//	pool.EnqueueJob([i]() { filePaths });
+	//}
 }
