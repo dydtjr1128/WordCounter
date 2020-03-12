@@ -17,22 +17,27 @@ namespace File {
 		return files;
 	}
 
-	bool equal(const std::string& str, std::size_t pos, const std::string& word)
-	{
-		if (word.size() > str.size() - pos) return false;
-
+	bool equal(const std::string& line, std::size_t pos, const std::string& word) {
+		if (word.size() > line.size() - pos) return false;		
+		
 		for (std::size_t i = 0; i < word.size(); ++i)
-			if (word[i] != str[pos + i]) return false;
+			if (word[i] != line[pos + i]) return false;
 
 		return true;
 	}
 
-	bool contains(const std::string& str, const std::string& word)
-	{
-		for (std::size_t i = 0; i < str.size(); ++i)
-			if (equal(str, i, word)) return true;
+	int countWords(std::string line, std::string word)	{
+		int count = 0;
+		std::transform(line.begin(), line.end(), line.begin(), ::tolower);
+		std::transform(word.begin(), word.end(), word.begin(), ::tolower);
 
-		return false;
+		for (std::size_t i = 0; i < line.size(); ++i) {
+			if (equal(line, i, word)) {
+				++count;				
+			}
+		}
+
+		return count;
 	}
 
 	int FileReader::CountWordsInFile(const std::filesystem::path& filePath, const std::string& word) {
@@ -40,11 +45,11 @@ namespace File {
 		int count = 0;
 		std::ifstream stream(filePath, std::ios::binary);
 		std::string line;
-		if (stream.is_open()) {
+		if (stream.is_open()) {						
 			while (std::getline(stream, line)) // for each line in the file
-			{
-				if (contains(line, word))
-					++count;
+			{				
+				count += countWords(line, word);
+					
 			}
 
 		}
