@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://user-images.githubusercontent.com/19161231/79751686-fab35a80-834d-11ea-97a1-4579b1dcfa48.png" align="middle"/>
+  <img src="https://user-images.githubusercontent.com/19161231/79751923-6269a580-834e-11ea-8ffe-a2f70bcc4df1.png" align="middle"/>
 </p>
 
 # Welcome to WordCounter project!
