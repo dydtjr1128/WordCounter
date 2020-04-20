@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="https://user-images.githubusercontent.com/19161231/79751686-fab35a80-834d-11ea-97a1-4579b1dcfa48.png" align="middle"/>
+</p>
+
 # Welcome to WordCounter project!
 This is `WordCounter` what I want to find word in all directory files.
 `WordCounter` is a fast, multi-threaded counter written in C++17.
