@@ -15,7 +15,7 @@ int main(void) {
 	std::string filePath, findWord;
 	std::cout << "Input findWord>>";
 	std::cin >> findWord;
-	std::cout << "Input filePath>>";
+	std::cout << "Input filePath(also find all sub directory)>>";
 	std::cin >> filePath;
 
 	auto filePaths = File::FileReader::ReadSubFiles(std::filesystem::path(filePath));
